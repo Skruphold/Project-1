@@ -1,6 +1,19 @@
 console.log("hello world");
 
+var locationInput = $("#location");
+var eventInput = $("#eventInput");
+var concertsEl = $("#concert");
+var sportsEl = $("#sports");
+var attractionsEl = $("#attractions");
+var submitBtn = $("#submitBtn");
+
 var tmAPIkey = "j6vHekkc5X8bANXHOmkGTl9eTugoLWGi"
+
+submitBtn.on("click", function(event) {
+    event.preventDefault();
+    locationValue = locationInput.val().trim();
+    getLocation(locationValue);
+})
 
 function getLocation () {
     var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=" + tmAPIkey;
