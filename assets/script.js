@@ -11,12 +11,13 @@ var tmAPIkey = "j6vHekkc5X8bANXHOmkGTl9eTugoLWGi"
 
 submitBtn.on("click", function(event) {
     event.preventDefault();
-    locationValue = locationInput.val().trim();
+    var locationValue = locationInput.val().trim();
     getLocation(locationValue);
 })
 
-function getLocation () {
-    var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=" + tmAPIkey;
+function getLocation (locationValue) {
+    // var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=" + tmAPIkey;
+    var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&city=" + locationValue + "&apikey=" + tmAPIkey;
 
     fetch(tmURL)
         .then(function(response){
