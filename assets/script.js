@@ -7,17 +7,24 @@ var sportsEl = $("#sports");
 var attractionsEl = $("#attractions");
 var submitBtn = $("#submitBtn");
 
+
 var tmAPIkey = "j6vHekkc5X8bANXHOmkGTl9eTugoLWGi"
 
 submitBtn.on("click", function(event) {
     event.preventDefault();
     var locationValue = locationInput.val().trim();
-    getLocation(locationValue);
+    var eventValue = eventInput.val().trim();
+    getLocation(locationValue, eventValue);
+    apiCovid();
+    locationInput.val("");
+    // console.log(eventValue);
 })
 
-function getLocation (locationValue) {
+
+
+function getLocation (locationValue, eventValue) {
     // var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=" + tmAPIkey;
-    var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&city=" + locationValue + "&apikey=" + tmAPIkey;
+    var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=" + eventValue + "&city=" + locationValue + "&apikey=" + tmAPIkey;
 
     fetch(tmURL)
         .then(function(response){
