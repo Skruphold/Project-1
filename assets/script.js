@@ -62,7 +62,7 @@ var apiCovid = function(){
     var rightNow = moment().format('YYYY-MM-DD');
     console.log(rightNow);
 
-    var apiUrl = "https://api.covid19tracking.narrativa.com/api/" + rightNow + "/country/US/region/washington";
+    var apiUrl = "https://api.covid19tracking.narrativa.com/api/" + rightNow + "/country/US/region/" + stateValue;
 
 
 
@@ -75,6 +75,6 @@ var apiCovid = function(){
             }
         })
 };
-apiCovid();
+// apiCovid();
 
 
