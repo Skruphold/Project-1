@@ -64,17 +64,20 @@ function getLocation (locationValue, eventValue) {
 // Calling on getLocation
 // getLocation();
 
-var stateInput = $("#state")
+
+var stateInput = $("#state");
 
 var apiCovid = function(){
 
     var stateValue = stateInput.val().trim();
+    // stateValue and grabs the input from input tag with id="state"
 
     var rightNow = moment().format('YYYY-MM-DD');
+    // rightNow gives current day in the format for url to work
     console.log(rightNow);
 
-    var apiUrl = "https://api.covid19tracking.narrativa.com/api/" + rightNow + "/country/US/region/washington";
-
+    var apiUrl = "https://api.covid19tracking.narrativa.com/api/" + rightNow + "/country/US/region/" + stateValue;
+    console.log(apiUrl);
 
     fetch(apiUrl)
         .then(function(response){
@@ -85,6 +88,6 @@ var apiCovid = function(){
             }
         })
 };
-apiCovid();
+
 
 
