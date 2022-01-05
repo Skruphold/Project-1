@@ -16,13 +16,13 @@
         </p>
       </nav>
       
-      <section class="section is-large">
+      <section id="searchPage" class="section is-large">
       <div class="container">
         <div class="notification is-black is-fullheight">
             <div class="control">
                 <h1>Some Text</h1>
                 <input id="location" class="input" type="text" placeholder="Enter City Name">
-                <!-- add state search bar -->
+                <input id="state" class="input" type="text" placeholder="Enter State Name">
               </div>
               <div class="control is-expanded">
                 <div class="select is-fullwidth">
@@ -39,5 +39,39 @@
         </div>
       </div>
     </section>
+    <div id="resultsPage" class="container columns">
+      <table class="table column" id="resultsTable">
+        <thead>
+          <tr>
+            <th>City</th>
+            <th><abbr title="TC">Today's Cases</abbr></th>
+            <th><abbr title="YTDC">YTD Cases</abbr></th>
+            <th><abbr title="ATC">All time cases</abbr></th>
+          </tr>
+        </thead>
+
+        <!-- I think we're supposed to append the following as children in JS. -->
+
+        <!-- <tbody>
+          <tr>
+            <td><a href="" title=""></a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td</td>
+            <td></td>
+          </tr>
+        </tbody> -->
+      </table>
+
+      <div class="card column">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="https://static.dw.com/image/57035352_101.jpg" alt="Concert goers wearing masks">
+          </figure>
+        </div>
+        
+      </div>
+    </div>
     <script src="./assets/script.js"></script>
 </html>
