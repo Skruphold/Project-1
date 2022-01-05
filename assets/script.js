@@ -58,11 +58,13 @@ var apiCovid = function(){
 
 
     var stateValue = stateInput.val().trim();
+    var locationValue = locationInput.val().trim();
 
     var rightNow = moment().format('YYYY-MM-DD');
     console.log(rightNow);
 
     var apiUrl = "https://api.covid19tracking.narrativa.com/api/" + rightNow + "/country/US/region/" + stateValue;
+    console.log(apiUrl);
 
 
 
