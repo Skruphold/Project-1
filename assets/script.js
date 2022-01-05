@@ -28,6 +28,15 @@ submitBtn.on("click", function(event) {
     // console.log(eventValue);
 })
 
+// pressing enter will also populate the page.
+$(document).on('keypress', function(e) {
+    // e.preventDefault();
+    if(e.which == 13) {
+        submitBtn.click();
+        e.preventDefault();
+    }
+})
+
 // made a function to call on an api based on the user inputed values that displays our response in the console. 
 function getLocation (locationValue, eventValue) {
     // var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=" + tmAPIkey;
