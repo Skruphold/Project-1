@@ -48,8 +48,8 @@ function getLocation (locationValue, eventValue) {
                     var link = document.createElement("td");
                     var hrefurl = data._embedded.events[i].url;
                     var anchor = document.createElement("a");
-                    $(anchor).attr("href=", hrefurl )
-                    link.textContent= anchor;
+                    $(anchor).attr("href", hrefurl )
+                    anchor.textContent= anchor;
                     $(link).append(anchor);
                     $(newEntry).append(link);
                     $(tableBody).append(newEntry);  
@@ -92,8 +92,7 @@ var apiCovid = function(){
         .then(function(response){
             if(response.ok){
                 response.json().then(function(data){
-                    var covidData = data.dates[rightNow].countries.US.regions[0];
-                    console.log(covidData);
+                    console.log(data);
                 })
             }
         })
