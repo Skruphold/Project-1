@@ -8,7 +8,8 @@ var sportsEl = $("#sports");
 var attractionsEl = $("#attractions");
 var submitBtn = $("#submitBtn");
 var resultsPage = $("#resultsPage");
-var searchPage = $("#searchPage")
+var searchPage = $("#searchPage");
+// var resultsTable = $("#resultsPage");
 
 // Hunter's api key
 var tmAPIkey = "j6vHekkc5X8bANXHOmkGTl9eTugoLWGi"
@@ -36,6 +37,20 @@ function getLocation (locationValue, eventValue) {
             if (response.ok){
                response.json().then(function(data){
                     console.log(data);
+                var tableBody= document.createElement("tbody");
+                var newEntry = document.createElement("tr");
+                var city = document.createElement("td");
+                console.log(data._embedded.events[1].name);
+                city.textContent=locationValue;
+                $(newEntry).append(city);
+                $(tableBody).append(newEntry);
+               
+                $("#resultsTable").append(tableBody);
+                // newEntry.append(artist);
+                // table.append(newEntry);
+
+
+
                 })
                 }
         // catching any errors
