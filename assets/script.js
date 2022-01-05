@@ -47,7 +47,7 @@ function getLocation (locationValue, eventValue) {
 }
 
 // Calling on getLocation
-getLocation();
+// getLocation();
 
 var stateInput = $("#state")
 
