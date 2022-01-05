@@ -50,8 +50,17 @@ function getLocation (locationValue, eventValue) {
 // Calling on getLocation
 getLocation();
 
+var stateInput = $("#state")
+
 var apiCovid = function(){
+
+
+    // var stateValue = stateInput.val().trim();
+
+   
+
     var apiUrl = "https://api.covid19tracking.narrativa.com/api/2022-01-04/country/US/region/Minnesota";
+
 
     fetch(apiUrl)
         .then(function(response){
