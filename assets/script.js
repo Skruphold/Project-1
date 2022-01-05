@@ -37,6 +37,7 @@ function getLocation (locationValue, eventValue) {
             if (response.ok){
                response.json().then(function(data){
                     console.log(data);
+                    //added a for loop through the list of events and appending the events on the html page.
                     for( var i = 0; i < data._embedded.events.length; i++) {
                     var tableBody= document.createElement("tbody");
                     var newEntry = document.createElement("tr");
@@ -53,8 +54,12 @@ function getLocation (locationValue, eventValue) {
                     var link = document.createElement("td");
                     var hrefurl = data._embedded.events[i].url;
                     var anchor = document.createElement("a");
+
+                  
+
                     $(anchor).attr("href", hrefurl );
                     anchor.textContent= eventName;
+
                     $(link).append(anchor);
                     $(newEntry).append(link);
                     
