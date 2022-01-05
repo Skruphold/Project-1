@@ -50,6 +50,7 @@ function getLocation (locationValue, eventValue) {
 // Calling on getLocation
 getLocation();
 
+
 var stateInput = $("#state");
 
 var apiCovid = function(){
