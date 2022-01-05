@@ -83,7 +83,8 @@ var apiCovid = function(){
         .then(function(response){
             if(response.ok){
                 response.json().then(function(data){
-                    console.log(data);
+                    var covidData = data.dates[rightNow].countries.US.regions[0];
+                    console.log(covidData);
                 })
             }
         })
