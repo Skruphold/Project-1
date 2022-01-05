@@ -53,12 +53,12 @@ var stateInput = $("#state")
 
 var apiCovid = function(){
 
+    var stateValue = stateInput.val().trim();
 
-    // var stateValue = stateInput.val().trim();
+    var rightNow = moment().format('YYYY-MM-DD');
+    console.log(rightNow);
 
-   
-
-    var apiUrl = "https://api.covid19tracking.narrativa.com/api/2022-01-04/country/US/region/Minnesota";
+    var apiUrl = "https://api.covid19tracking.narrativa.com/api/" + rightNow + "/country/US/region/washington";
 
 
     fetch(apiUrl)
