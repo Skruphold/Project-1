@@ -32,8 +32,13 @@ function getLocation () {
 }
 getLocation();
 
+var stateInput = $("#state");
+
 var apiCovid = function(){
-    var apiUrl = "https://api.covid19tracking.narrativa.com/api/2022-01-04/country/us/region/minnesota"
+    
+    // stateValue = stateInput.val().trim();
+
+    var apiUrl = "https://api.covid19tracking.narrativa.com/api/2022-01-04/country/us/region/" + "minneapolis";
 
     fetch(apiUrl)
         .then(function(response){
