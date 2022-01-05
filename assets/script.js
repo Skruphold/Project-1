@@ -7,6 +7,8 @@ var concertsEl = $("#concert");
 var sportsEl = $("#sports");
 var attractionsEl = $("#attractions");
 var submitBtn = $("#submitBtn");
+var resultsPage = $("#resultsPage");
+var searchPage = $("#searchPage")
 
 // Hunter's api key
 var tmAPIkey = "j6vHekkc5X8bANXHOmkGTl9eTugoLWGi"
@@ -27,6 +29,8 @@ submitBtn.on("click", function(event) {
 function getLocation (locationValue, eventValue) {
     // var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=" + tmAPIkey;
     var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=" + eventValue + "&city=" + locationValue + "&apikey=" + tmAPIkey;
+    resultsPage.removeAttr('id', 'resultsPage');
+    searchPage.attr('id', 'resultsPage');
 
     fetch(tmURL)
         .then(function(response){
@@ -40,6 +44,7 @@ function getLocation (locationValue, eventValue) {
         .catch(function(){
             alert("error");
         })
+
 }
 
 // Calling on getLocation
