@@ -9,7 +9,7 @@ var attractionsEl = $("#attractions");
 var submitBtn = $("#submitBtn");
 var resultsPage = $("#resultsPage");
 var searchPage = $("#searchPage");
-var table = $("#resultsPage");
+// var resultsTable = $("#resultsPage");
 
 // Hunter's api key
 var tmAPIkey = "j6vHekkc5X8bANXHOmkGTl9eTugoLWGi"
@@ -20,6 +20,8 @@ submitBtn.on("click", function(event) {
     event.preventDefault();
     var locationValue = locationInput.val().trim();
     var eventValue = eventInput.val().trim();
+    resultsPage.removeAttr('id', 'resultsPage');
+    searchPage.attr('id', 'resultsPage');
     getLocation(locationValue, eventValue);
     apiCovid();
     locationInput.val("");
@@ -30,19 +32,22 @@ submitBtn.on("click", function(event) {
 function getLocation (locationValue, eventValue) {
     // var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=" + tmAPIkey;
     var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=" + eventValue + "&city=" + locationValue + "&apikey=" + tmAPIkey;
-    resultsPage.removeAttr('id', 'resultsPage');
-    searchPage.attr('id', 'resultsPage');
-
     fetch(tmURL)
         .then(function(response){
             if (response.ok){
                response.json().then(function(data){
                     console.log(data);
+                var tableBody= document.createElement("tbody");
                 var newEntry = document.createElement("tr");
-                var artist = document.createElement("td");
-                artist.textContent=data._embedded.events[1].name
-                newEntry.appendChild(artist);
-                table.appendChild(newEntry);
+                var city = document.createElement("td");
+                console.log(data._embedded.events[1].name);
+                city.textContent=locationValue;
+                $(newEntry).append(city);
+                $(tableBody).append(newEntry);
+               
+                $("#resultsTable").append(tableBody);
+                // newEntry.append(artist);
+                // table.append(newEntry);
 
 
 
@@ -59,8 +64,17 @@ function getLocation (locationValue, eventValue) {
 // Calling on getLocation
 getLocation();
 
+var stateInput = $("#state")
+
 var apiCovid = function(){
+
+
+    // var stateValue = stateInput.val().trim();
+
+   
+
     var apiUrl = "https://api.covid19tracking.narrativa.com/api/2022-01-04/country/US/region/Minnesota";
+
 
     fetch(apiUrl)
         .then(function(response){
