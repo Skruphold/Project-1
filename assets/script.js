@@ -40,22 +40,34 @@ function getLocation (locationValue, eventValue) {
                     for( var i = 0; i < data._embedded.events.length; i++) {
                     var tableBody= document.createElement("tbody");
                     var newEntry = document.createElement("tr");
-                    var city = document.createElement("td");
-                    // console.log(data._embedded.events[1].name);
-                    city.textContent=locationValue;
-                    $(newEntry).append(city);
+                    // var city = document.createElement("td");
+                    var eventName=data._embedded.events[i].name;
+                   
+                    // city.textContent=locationValue;
+                    // $(newEntry).append(city);
+                    var eventDate= document.createElement("td");
+                    var dateTime=data._embedded.events[i].dates.start.localDate;
+                    eventDate.textContent=dateTime;
+                    $(newEntry).append(eventDate);
                     
                     var link = document.createElement("td");
                     var hrefurl = data._embedded.events[i].url;
                     var anchor = document.createElement("a");
-                    $(anchor).attr("href", hrefurl )
-                    anchor.textContent= anchor;
+                    $(anchor).attr("href", hrefurl );
+                    anchor.textContent= eventName;
                     $(link).append(anchor);
                     $(newEntry).append(link);
+                    
+                    var venue=document.createElement("td");
+                    var venuelocation=data._embedded.events[i]._embedded.venues[0].name;
+                    venue.textContent=venuelocation
+                    $(newEntry).append(venue);
+
+
+
                     $(tableBody).append(newEntry);  
                     $("#tmResults").append(tableBody);
-                    // newEntry.append(artist);
-                    // table.append(newEntry);
+                
                     }
 
 
@@ -95,7 +107,7 @@ var apiCovid = function(){
                     var covidData = data.dates[rightNow].countries.US.regions[0];
                     console.log(data);
                     console.log(covidData);
-
+                  
                 })
             }
         })
