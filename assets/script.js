@@ -37,17 +37,26 @@ function getLocation (locationValue, eventValue) {
             if (response.ok){
                response.json().then(function(data){
                     console.log(data);
-                var tableBody= document.createElement("tbody");
-                var newEntry = document.createElement("tr");
-                var city = document.createElement("td");
-                console.log(data._embedded.events[1].name);
-                city.textContent=locationValue;
-                $(newEntry).append(city);
-                $(tableBody).append(newEntry);
-               
-                $("#resultsTable").append(tableBody);
-                // newEntry.append(artist);
-                // table.append(newEntry);
+                    for( var i = 0; i < data._embedded.events.length; i++) {
+                    var tableBody= document.createElement("tbody");
+                    var newEntry = document.createElement("tr");
+                    var city = document.createElement("td");
+                    // console.log(data._embedded.events[1].name);
+                    city.textContent=locationValue;
+                    $(newEntry).append(city);
+                    
+                    var link = document.createElement("td");
+                    var hrefurl = data._embedded.events[i].url;
+                    var anchor = document.createElement("a");
+                    $(anchor).attr("href=", hrefurl )
+                    link.textContent= anchor;
+                    $(link).append(anchor);
+                    $(newEntry).append(link);
+                    $(tableBody).append(newEntry);  
+                    $("#tmResults").append(tableBody);
+                    // newEntry.append(artist);
+                    // table.append(newEntry);
+                    }
 
 
 
@@ -83,7 +92,8 @@ var apiCovid = function(){
         .then(function(response){
             if(response.ok){
                 response.json().then(function(data){
-                    console.log(data);
+                    var covidData = data.dates[rightNow].countries.US.regions[0];
+                    console.log(covidData);
                 })
             }
         })
