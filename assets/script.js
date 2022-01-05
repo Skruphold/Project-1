@@ -19,6 +19,8 @@ submitBtn.on("click", function(event) {
     event.preventDefault();
     var locationValue = locationInput.val().trim();
     var eventValue = eventInput.val().trim();
+    resultsPage.removeAttr('id', 'resultsPage');
+    searchPage.attr('id', 'resultsPage');
     getLocation(locationValue, eventValue);
     apiCovid();
     locationInput.val("");
@@ -29,9 +31,6 @@ submitBtn.on("click", function(event) {
 function getLocation (locationValue, eventValue) {
     // var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=" + tmAPIkey;
     var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=" + eventValue + "&city=" + locationValue + "&apikey=" + tmAPIkey;
-    resultsPage.removeAttr('id', 'resultsPage');
-    searchPage.attr('id', 'resultsPage');
-
     fetch(tmURL)
         .then(function(response){
             if (response.ok){
