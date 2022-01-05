@@ -20,11 +20,17 @@ submitBtn.on("click", function(event) {
     event.preventDefault();
     var locationValue = locationInput.val().trim();
     var eventValue = eventInput.val().trim();
+    if (locationValue==="") {
+        return;
+    } else if (stateValue===""){
+        return;
+    } else {
     resultsPage.removeAttr('id', 'resultsPage');
     searchPage.attr('id', 'resultsPage');
     getLocation(locationValue, eventValue);
     apiCovid();
     locationInput.val("");
+    }
     // console.log(eventValue);
 })
 
@@ -67,6 +73,7 @@ function getLocation (locationValue, eventValue) {
                   
 
                     $(anchor).attr("href", hrefurl );
+                    $(anchor).attr("target", "_blank" );
                     anchor.textContent= eventName;
 
                     $(link).append(anchor);

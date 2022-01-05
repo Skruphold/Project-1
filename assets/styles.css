@@ -1,3 +1,26 @@
 #resultsPage {
     display: none;
 }
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    height: 75px;
+    background-color: black;
+    color: white;
+}
+.navbar p {
+    color: white
+}
+html {
+    background-color: lightgray;
+}
+td table thead {
+    background-color: lightgray;
+}
+#resultsTable {
+background-color: lightgray;
+}
+#tmResults {
+    background-color: lightgray;
+}
