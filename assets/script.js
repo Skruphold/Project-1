@@ -112,7 +112,26 @@ var apiCovid = function(){
                     var covidData = data.dates[rightNow].countries.US.regions[0];
                     console.log(data);
                     console.log(covidData);
-                  
+                    
+
+                    var tableBody= document.createElement("tbody");
+                    var newEntry = document.createElement("tr");
+                    var newConfirmed = document.createElement("td");
+
+                    var stateName = document.createElement("td");
+                    stateName.textContent = stateValue;
+                    $(newEntry).append(stateName);
+                    var todayconfirmedData = covidData.today_new_confirmed;
+                    newConfirmed.textContent = todayconfirmedData;
+                    var allTimeConfirmed = covidData.today_confirmed;
+                    var allTime = document.createElement("td");
+                    allTime.textContent = allTimeConfirmed;
+                    $(newEntry).append(newConfirmed);
+                    $(newEntry).append(allTime);
+                    $(tableBody).append(newEntry);
+                    $("#resultsTable").append(tableBody);
+                    console.log(tableBody);
+                    console.log(todayconfirmedData);
                 })
             }
         })
