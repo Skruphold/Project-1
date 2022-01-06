@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/styles.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
-    <title>Document</title>
+    <title>Event Covid Tracker</title>
 </head>
 <body>
     <nav class="navbar content" role="navigation" aria-label="main navigation">
@@ -21,7 +21,7 @@
       <div class="container">
         <div class="notification is-black is-fullheight">
             <div class="control">
-                <h1>Some Text</h1>
+                <h1>Please search for a city, state, and select a type of entertainment you are looking for.</h1>
                 <input id="location" class="input" type="text" placeholder="Enter City Name">
                 <input id="state" class="input" type="text" placeholder="Enter State Name">
               </div>
@@ -47,6 +47,8 @@
            <th>State</th> 
             <th>Today's Confirmed Cases</th>
             <th>All time cases</th>
+          </tr>
+          <tr id="search-history">
           </tr>
         </thead>
 

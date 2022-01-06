@@ -14,23 +14,23 @@ var searchPage = $("#searchPage");
 // Hunter's api key
 var tmAPIkey = "j6vHekkc5X8bANXHOmkGTl9eTugoLWGi"
 
-
 // Creating a event listener to the submit button that call's on our api call's and empty the inputed text.
 submitBtn.on("click", function(event) {
     event.preventDefault();
     var locationValue = locationInput.val().trim();
     var eventValue = eventInput.val().trim();
-    if (locationValue==="") {
-        return;
-    } else if (stateValue===""){
-        return;
-    } else {
-    resultsPage.removeAttr('id', 'resultsPage');
-    searchPage.attr('id', 'resultsPage');
-    getLocation(locationValue, eventValue);
-    apiCovid();
-    locationInput.val("");
-    }
+    // if (locationValue==="") {
+    //     return;
+    // } else if (stateValue===""){
+    //     return;
+    // } else {
+        resultsPage.removeAttr('id', 'resultsPage');
+        searchPage.attr('id', 'resultsPage');
+        getLocation(locationValue, eventValue);
+        apiCovid();
+        searchHistory(locationValue, stateValue, eventValue);
+        locationInput.val("");
+    // }
     // console.log(eventValue);
 })
 
@@ -70,8 +70,6 @@ function getLocation (locationValue, eventValue) {
                     var hrefurl = data._embedded.events[i].url;
                     var anchor = document.createElement("a");
 
-                  
-
                     $(anchor).attr("href", hrefurl );
                     $(anchor).attr("target", "_blank" );
                     anchor.textContent= eventName;
@@ -84,15 +82,10 @@ function getLocation (locationValue, eventValue) {
                     venue.textContent=venuelocation
                     $(newEntry).append(venue);
 
-
-
                     $(tableBody).append(newEntry);  
                     $("#tmResults").append(tableBody);
                 
                     }
-
-
-
                 })
                 }
         // catching any errors
@@ -100,14 +93,13 @@ function getLocation (locationValue, eventValue) {
         .catch(function(){
             alert("error");
         })
-
 }
 
 // Calling on getLocation
 // getLocation();
 
-
 var stateInput = $("#state");
+var stateValue = stateInput.val().trim();
 
 var apiCovid = function(){
 
@@ -152,6 +144,34 @@ var apiCovid = function(){
             }
         })
 };
+
+//empty array  for storage
+var searchList = []
+
+function searchHistory(locationValue, eventValue, stateValue) {
+    if (locationValue && eventValue && stateValue) {
+        
+            searchList.push(locationValue, eventValue, stateValue);
+            searchArray();
+            //add class hide
+
+        console.log(searchList);
+    }
+}
+
+var searchStore = $('#search-history');
+
+function searchArray() {
+    searchStore.empty();
+    searchList.forEach(function(region) {
+        // needs to be appended
+        var searchHistitem = $('<th class="history-btn">');
+        searchHistitem.attr("data-value", region);
+        searchHistitem.text(region);
+        searchStore.prepend(searchHistitem);
+    })
+    localStorage.setItem("search", JSON.stringify(searchList));
+}
 
 
 
