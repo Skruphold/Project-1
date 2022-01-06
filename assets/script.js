@@ -9,6 +9,8 @@ var attractionsEl = $("#attractions");
 var submitBtn = $("#submitBtn");
 var resultsPage = $("#resultsPage");
 var searchPage = $("#searchPage");
+// var locationValue = locationInput.val().trim();
+// var eventValue = eventInput.val().trim();
 // var resultsTable = $("#resultsPage");
 
 // Hunter's api key
@@ -28,7 +30,7 @@ submitBtn.on("click", function(event) {
         searchPage.attr('id', 'resultsPage');
         getLocation(locationValue, eventValue);
         apiCovid();
-        searchHistory(locationValue, stateValue, eventValue);
+        // recentStorage();
         locationInput.val("");
     // }
     // console.log(eventValue);
@@ -47,6 +49,13 @@ $(document).on('keypress', function(e) {
 function getLocation (locationValue, eventValue) {
     // var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=" + tmAPIkey;
     var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=" + eventValue + "&city=" + locationValue + "&apikey=" + tmAPIkey;
+    var stateValue = stateInput.val().trim();
+
+    searchList.push(locationValue);
+    searchList.push(stateValue);
+    searchList.push(eventValue);
+    localStorage.setItem("search", JSON.stringify(searchList))
+
     fetch(tmURL)
         .then(function(response){
             if (response.ok){
@@ -87,7 +96,7 @@ function getLocation (locationValue, eventValue) {
                 
                     }
                 })
-                }
+            }
         // catching any errors
         })
         .catch(function(){
@@ -99,7 +108,7 @@ function getLocation (locationValue, eventValue) {
 // getLocation();
 
 var stateInput = $("#state");
-var stateValue = stateInput.val().trim();
+// var stateValue = stateInput.val().trim();
 
 var apiCovid = function(){
 
@@ -146,32 +155,11 @@ var apiCovid = function(){
 };
 
 //empty array  for storage
-var searchList = []
-
-function searchHistory(locationValue, eventValue, stateValue) {
-    if (locationValue && eventValue && stateValue) {
-        
-            searchList.push(locationValue, eventValue, stateValue);
-            searchArray();
-            //add class hide
-
-        console.log(searchList);
-    }
-}
-
 var searchStore = $('#search-history');
-
-function searchArray() {
-    searchStore.empty();
-    searchList.forEach(function(region) {
-        // needs to be appended
-        var searchHistitem = $('<th class="history-btn">');
-        searchHistitem.attr("data-value", region);
-        searchHistitem.text(region);
-        searchStore.prepend(searchHistitem);
-    })
-    localStorage.setItem("search", JSON.stringify(searchList));
-}
+var searchList = JSON.parse(localStorage.getItem("search"));
+if(searchList === null){
+    var searchList = [];
+};
 
 
 
