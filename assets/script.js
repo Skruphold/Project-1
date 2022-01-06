@@ -38,7 +38,6 @@ submitBtn.on("click", function(event) {
 
 // pressing enter will also populate the page.
 $(document).on('keypress', function(e) {
-    // e.preventDefault();
     if(e.which == 13) {
         submitBtn.click();
         e.preventDefault();
@@ -47,13 +46,9 @@ $(document).on('keypress', function(e) {
 
 // made a function to call on an api based on the user inputed values that displays our response in the console. 
 function getLocation (locationValue, eventValue) {
-    // var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=" + tmAPIkey;
     var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=" + eventValue + "&city=" + locationValue + "&apikey=" + tmAPIkey;
     var stateValue = stateInput.val().trim();
-
-    searchList.push(locationValue);
-    searchList.push(stateValue);
-    searchList.push(eventValue);
+    searchList.push({locationValue, stateValue, eventValue});
     localStorage.setItem("search", JSON.stringify(searchList))
 
     fetch(tmURL)
