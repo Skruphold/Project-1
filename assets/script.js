@@ -46,7 +46,7 @@ $(document).on('keypress', function(e) {
 
 // made a function to call on an api based on the user inputed values that displays our response in the console. 
 function getLocation (locationValue, eventValue, stateValue) {
-    var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=" + eventValue + "&city=" + locationValue + "&apikey=" + tmAPIkey;
+    var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=" + eventValue + "&city=" + locationValue + "&apikey=" + tmAPIkey + "&sort=date,asc";
     
     fetch(tmURL)
         .then(function(response){
