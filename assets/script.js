@@ -1,6 +1,7 @@
 // console.log("hello world"); tested script file
 
 // astablishing main variables
+var stateInput = $("#state");
 var locationInput = $("#location");
 var eventInput = $("#eventInput");
 var concertsEl = $("#concert");
@@ -13,6 +14,10 @@ var searchPage = $("#searchPage");
 // var eventValue = eventInput.val().trim();
 // var resultsTable = $("#resultsPage");
 
+// var searchedCity =JSON.stringify(searchList[i].locationValue).replace(/^"|"$/g, '');
+// var searchedState =JSON.stringify(searchList[i].stateValue).replace(/^"|"$/g, '');
+// var searchedEvent =JSON.stringify(searchList[i].eventValue).replace(/^"|"$/g, '');
+
 // Hunter's api key
 var tmAPIkey = "j6vHekkc5X8bANXHOmkGTl9eTugoLWGi"
 
@@ -21,6 +26,7 @@ submitBtn.on("click", function(event) {
     event.preventDefault();
     var locationValue = locationInput.val().trim();
     var eventValue = eventInput.val().trim();
+    var stateValue = stateInput.val().trim();
     // if (locationValue==="") {
     //     return;
     // } else if (stateValue===""){
@@ -28,10 +34,13 @@ submitBtn.on("click", function(event) {
     // } else {
         resultsPage.removeAttr('id', 'resultsPage');
         searchPage.attr('id', 'resultsPage');
-        getLocation(locationValue, eventValue);
-        apiCovid();
+        getLocation(locationValue, eventValue, stateValue);
+        apiCovid(stateValue);
         // recentStorage();
         locationInput.val("");
+        stateInput.val("");
+        searchList.push({locationValue, stateValue, eventValue});
+        localStorage.setItem("search", JSON.stringify(searchList));
         
     // }
     // console.log(eventValue);
@@ -46,11 +55,11 @@ $(document).on('keypress', function(e) {
 })
 
 // made a function to call on an api based on the user inputed values that displays our response in the console. 
-function getLocation (locationValue, eventValue) {
+function getLocation (locationValue, eventValue, stateValue) {
     var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=" + eventValue + "&city=" + locationValue + "&apikey=" + tmAPIkey;
-    var stateValue = stateInput.val().trim();
-    searchList.push({locationValue, stateValue, eventValue});
-    localStorage.setItem("search", JSON.stringify(searchList));
+    // var stateValue = stateInput.val().trim();
+    // searchList.push({locationValue, stateValue, eventValue});
+    // localStorage.setItem("search", JSON.stringify(searchList));
 
     // var savedData= JSON.parse(localStorage.getItem("search"));
     // console.log(savedData);
@@ -106,12 +115,12 @@ function getLocation (locationValue, eventValue) {
 // Calling on getLocation
 // getLocation();
 
-var stateInput = $("#state");
+// var stateInput = $("#state");
 // var stateValue = stateInput.val().trim();
 
-var apiCovid = function(){
+var apiCovid = function(stateValue){
 
-    var stateValue = stateInput.val().trim();
+    // var stateValue = stateInput.val().trim();
     // stateValue and grabs the input from input tag with id="state"
 
     var rightNow = moment().format('YYYY-MM-DD');
@@ -158,32 +167,57 @@ var apiCovid = function(){
 //empty array  for storage
 var searchStore = $('#search-history');
 var searchList = JSON.parse(localStorage.getItem("search"));
+// var searchedCity =JSON.stringify(searchList[i].locationValue).replace(/^"|"$/g, '');
+// var searchedState =JSON.stringify(searchList[i].stateValue).replace(/^"|"$/g, '');
+// var searchedEvent =JSON.stringify(searchList[i].eventValue).replace(/^"|"$/g, '');
+console.log(searchList);
 if(searchList === null){
     var searchList = [];
 };
+
+searchStore.on("click", "li.history-btn", function (event) {
+    var userCity = $(event.target).attr('data-city');
+    var userState = $(event.target).attr('data-state');
+    var userEvent = $(event.target).attr('data-event');
+    getLocation(userCity, userEvent, userState);
+    apiCovid(userState);
+    resultsPage.removeAttr('id', 'resultsPage');
+    searchPage.attr('id', 'resultsPage');
+    // console.log($(event.target).attr('data-city'));
+});
 
 
 function initialStore() {
     for (let i=0; i<searchList.length; i++) {
         var previouslist =document.createElement("ul");
         
-        var listEntries =document.createElement("li");
+        const listEntries =document.createElement("li");
         $(listEntries).attr("class", "history-btn");
         var searchedCity =JSON.stringify(searchList[i].locationValue).replace(/^"|"$/g, '');
         var searchedState =JSON.stringify(searchList[i].stateValue).replace(/^"|"$/g, '');
         var searchedEvent =JSON.stringify(searchList[i].eventValue).replace(/^"|"$/g, '');
+        $(listEntries).attr("data-city", searchedCity);
+        $(listEntries).attr("data-state", searchedState);
+        $(listEntries).attr("data-event", searchedEvent);
        
-        listEntries.textContent= "City: " + searchedCity.charAt(0).toUpperCase()+ searchedCity.slice(1) + " State: " + searchedState.charAt(0).toUpperCase()+ searchedState.slice(1) + " Event Type: " +searchedEvent;
+        function capitalize(searchedState) {
+            return searchedState.charAt(0).toUpperCase() + searchedState.slice(1);
+        };
+        function capitalize(searchedCity) {
+            return searchedCity.charAt(0).toUpperCase() + searchedCity.slice(1);
+        };
+        listEntries.textContent= "City: " + searchedCity.split(' ').map(capitalize).join(' ') + " State: " + searchedState.split(' ').map(capitalize).join(' ') + " Event Type: " +searchedEvent;
         $(previouslist).append(listEntries);
         $(searchStore).append(previouslist);
-        searchStore.on("click", "li.history-btn", function () {
-            getLocation(searchedCity, searchedEvent);
-            apiCovid(searchedState);
-            resultsPage.removeAttr('id', 'resultsPage');
-            searchPage.attr('id', 'resultsPage');
-        })
+        // searchStore.on("click", "li.history-btn", function () {
+        //     getLocation(searchedCity, searchedEvent, searchedState);
+        //     apiCovid(searchedState);
+        //     resultsPage.removeAttr('id', 'resultsPage');
+        //     searchPage.attr('id', 'resultsPage');
+        // })
     }
 }
 
 initialStore();
 
+// searchedState.charAt(0).toUpperCase() + searchedState.slice(1)
