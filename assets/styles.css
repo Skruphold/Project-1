@@ -29,3 +29,34 @@ background-color: lightgray;
    background-color: lightblue;
     
 }
+#search-history li {
+    display: flex;
+    justify-content: center;
+    align-items: column;
+    padding: 2px 2px;
+    border: 1px solid black; 
+
+}
+.card {
+    display: inline-block;
+    justify-content: center;
+    border: black solid 5px;
+}
+.containerEl {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+input {
+    margin: 5px;
+}
+#eventInput {
+    margin: 5px;
+}
+#submitBtn {
+    margin: 10px;
+}
+.textHistory{
+    display: flex;
+    justify-content: center;
+}
