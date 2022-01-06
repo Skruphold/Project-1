@@ -1,6 +1,4 @@
-// console.log("hello world"); tested script file
-
-// astablishing main variables
+// establishing main variables
 var stateInput = $("#state");
 var locationInput = $("#location");
 var eventInput = $("#eventInput");
@@ -10,13 +8,6 @@ var attractionsEl = $("#attractions");
 var submitBtn = $("#submitBtn");
 var resultsPage = $("#resultsPage");
 var searchPage = $("#searchPage");
-// var locationValue = locationInput.val().trim();
-// var eventValue = eventInput.val().trim();
-// var resultsTable = $("#resultsPage");
-
-// var searchedCity =JSON.stringify(searchList[i].locationValue).replace(/^"|"$/g, '');
-// var searchedState =JSON.stringify(searchList[i].stateValue).replace(/^"|"$/g, '');
-// var searchedEvent =JSON.stringify(searchList[i].eventValue).replace(/^"|"$/g, '');
 
 // Hunter's api key
 var tmAPIkey = "j6vHekkc5X8bANXHOmkGTl9eTugoLWGi"
@@ -27,11 +18,11 @@ submitBtn.on("click", function(event) {
     var locationValue = locationInput.val().trim();
     var eventValue = eventInput.val().trim();
     var stateValue = stateInput.val().trim();
-    // if (locationValue==="") {
-    //     return;
-    // } else if (stateValue===""){
-    //     return;
-    // } else {
+    if (locationValue==="") {
+        return;
+    } else if (stateValue===""){
+        return;
+    } else {
         resultsPage.removeAttr('id', 'resultsPage');
         searchPage.attr('id', 'resultsPage');
         getLocation(locationValue, eventValue, stateValue);
@@ -42,8 +33,7 @@ submitBtn.on("click", function(event) {
         searchList.push({locationValue, stateValue, eventValue});
         localStorage.setItem("search", JSON.stringify(searchList));
         
-    // }
-    // console.log(eventValue);
+    }
 })
 
 // pressing enter will also populate the page.
@@ -57,13 +47,7 @@ $(document).on('keypress', function(e) {
 // made a function to call on an api based on the user inputed values that displays our response in the console. 
 function getLocation (locationValue, eventValue, stateValue) {
     var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=" + eventValue + "&city=" + locationValue + "&apikey=" + tmAPIkey;
-    // var stateValue = stateInput.val().trim();
-    // searchList.push({locationValue, stateValue, eventValue});
-    // localStorage.setItem("search", JSON.stringify(searchList));
-
-    // var savedData= JSON.parse(localStorage.getItem("search"));
-    // console.log(savedData);
-
+    
     fetch(tmURL)
         .then(function(response){
             if (response.ok){
@@ -73,11 +57,7 @@ function getLocation (locationValue, eventValue, stateValue) {
                     for( var i = 0; i < data._embedded.events.length; i++) {
                     var tableBody= document.createElement("tbody");
                     var newEntry = document.createElement("tr");
-                    // var city = document.createElement("td");
                     var eventName=data._embedded.events[i].name;
-                   
-                    // city.textContent=locationValue;
-                    // $(newEntry).append(city);
                     var eventDate= document.createElement("td");
                     var dateTime=data._embedded.events[i].dates.start.localDate;
                     eventDate.textContent=dateTime;
@@ -112,16 +92,7 @@ function getLocation (locationValue, eventValue, stateValue) {
         })
 }
 
-// Calling on getLocation
-// getLocation();
-
-// var stateInput = $("#state");
-// var stateValue = stateInput.val().trim();
-
 var apiCovid = function(stateValue){
-
-    // var stateValue = stateInput.val().trim();
-    // stateValue and grabs the input from input tag with id="state"
 
     var rightNow = moment().format('YYYY-MM-DD');
     // rightNow gives current day in the format for url to work
@@ -164,12 +135,8 @@ var apiCovid = function(stateValue){
         })
 };
 
-//empty array  for storage
 var searchStore = $('#search-history');
 var searchList = JSON.parse(localStorage.getItem("search"));
-// var searchedCity =JSON.stringify(searchList[i].locationValue).replace(/^"|"$/g, '');
-// var searchedState =JSON.stringify(searchList[i].stateValue).replace(/^"|"$/g, '');
-// var searchedEvent =JSON.stringify(searchList[i].eventValue).replace(/^"|"$/g, '');
 console.log(searchList);
 if(searchList === null){
     var searchList = [];
@@ -183,7 +150,6 @@ searchStore.on("click", "li.history-btn", function (event) {
     apiCovid(userState);
     resultsPage.removeAttr('id', 'resultsPage');
     searchPage.attr('id', 'resultsPage');
-    // console.log($(event.target).attr('data-city'));
 });
 
 
@@ -209,15 +175,9 @@ function initialStore() {
         listEntries.textContent= "City: " + searchedCity.split(' ').map(capitalize).join(' ') + " State: " + searchedState.split(' ').map(capitalize).join(' ') + " Event Type: " +searchedEvent;
         $(previouslist).append(listEntries);
         $(searchStore).append(previouslist);
-        // searchStore.on("click", "li.history-btn", function () {
-        //     getLocation(searchedCity, searchedEvent, searchedState);
-        //     apiCovid(searchedState);
-        //     resultsPage.removeAttr('id', 'resultsPage');
-        //     searchPage.attr('id', 'resultsPage');
-        // })
     }
 }
 
 initialStore();
 
-// searchedState.charAt(0).toUpperCase() + searchedState.slice(1)
+
