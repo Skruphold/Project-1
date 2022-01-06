@@ -176,10 +176,14 @@ function initialStore() {
         listEntries.textContent= "City: " + searchedCity.charAt(0).toUpperCase()+ searchedCity.slice(1) + " State: " + searchedState.charAt(0).toUpperCase()+ searchedState.slice(1) + " Event Type: " +searchedEvent;
         $(previouslist).append(listEntries);
         $(searchStore).append(previouslist);
-        console.log(searchList);
-        console.log(previouslist);
-        console.log(searchStore);
+        searchStore.on("click", "li.history-btn", function () {
+            getLocation(searchedCity, searchedEvent);
+            apiCovid(searchedState);
+            resultsPage.removeAttr('id', 'resultsPage');
+            searchPage.attr('id', 'resultsPage');
+        })
     }
 }
+
 initialStore();
 
