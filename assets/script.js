@@ -32,6 +32,7 @@ submitBtn.on("click", function(event) {
         apiCovid();
         // recentStorage();
         locationInput.val("");
+        
     // }
     // console.log(eventValue);
 })
@@ -49,7 +50,10 @@ function getLocation (locationValue, eventValue) {
     var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=" + eventValue + "&city=" + locationValue + "&apikey=" + tmAPIkey;
     var stateValue = stateInput.val().trim();
     searchList.push({locationValue, stateValue, eventValue});
-    localStorage.setItem("search", JSON.stringify(searchList))
+    localStorage.setItem("search", JSON.stringify(searchList));
+
+    // var savedData= JSON.parse(localStorage.getItem("search"));
+    // console.log(savedData);
 
     fetch(tmURL)
         .then(function(response){
@@ -131,7 +135,9 @@ var apiCovid = function(){
                     var newConfirmed = document.createElement("td");
 
                     var stateName = document.createElement("td");
+                    stateValue=stateValue.charAt(0).toUpperCase()+stateValue.slice(1);
                     stateName.textContent = stateValue;
+               
                     $(newEntry).append(stateName);
                     var todayconfirmedData = covidData.today_new_confirmed;
                     newConfirmed.textContent = todayconfirmedData;
@@ -157,4 +163,23 @@ if(searchList === null){
 };
 
 
+function initialStore() {
+    for (let i=0; i<searchList.length; i++) {
+        var previouslist =document.createElement("ul");
+        
+        var listEntries =document.createElement("li");
+        $(listEntries).attr("class", "history-btn");
+        var searchedCity =JSON.stringify(searchList[i].locationValue).replace(/^"|"$/g, '');
+        var searchedState =JSON.stringify(searchList[i].stateValue).replace(/^"|"$/g, '');
+        var searchedEvent =JSON.stringify(searchList[i].eventValue).replace(/^"|"$/g, '');
+       
+        listEntries.textContent= "City: " + searchedCity.charAt(0).toUpperCase()+ searchedCity.slice(1) + " State: " + searchedState.charAt(0).toUpperCase()+ searchedState.slice(1) + " Event Type: " +searchedEvent;
+        $(previouslist).append(listEntries);
+        $(searchStore).append(previouslist);
+        console.log(searchList);
+        console.log(previouslist);
+        console.log(searchStore);
+    }
+}
+initialStore();
 
