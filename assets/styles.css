@@ -24,3 +24,8 @@ background-color: lightgray;
 #tmResults {
     background-color: lightgray;
 }
+.history-btn :hover {
+   cursor: pointer;
+   background-color: lightgray;
+    
+}
