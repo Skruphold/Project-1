@@ -24,8 +24,8 @@ background-color: lightgray;
 #tmResults {
     background-color: lightgray;
 }
-.history-btn :hover {
+.history-btn:hover {
    cursor: pointer;
-   background-color: lightgray;
+   background-color: lightblue;
     
 }
