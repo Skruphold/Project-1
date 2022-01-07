@@ -1,13 +1,27 @@
+
+html, body { 
+    margin: 0;
+    padding: 0;
+}
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
+}
 #resultsPage {
     display: none;
 }
-
+.content {
+    margin-bottom: 0px;
+}
 .navbar {
     display: flex;
     justify-content: center;
     height: 75px;
     background-color: black;
     color: white;
+    margin-bottom: 0;
 }
 .navbar p {
     color: white
@@ -18,17 +32,37 @@ html {
 td table thead {
     background-color: lightgray;
 }
-#resultsTable {
-background-color: lightgray;
+.columns {
+    background-image: url("https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg");
+    background-size: cover;
+    position: relative;
+    top: 0;
+    
+
 }
+#resultsTable {
+background-color: transparent;
+padding: 0px;
+margin: 0px;
+top: 5px;
+}
+
 #tmResults {
-    background-color: lightgray;
+    background-color: transparent;
+    top: 5px;
+}
+#searchPage {
+    min-height: 100%;
 }
 .history-btn:hover {
    cursor: pointer;
    background-color: lightblue;
-    
+
+
 }
+
+    
+
 #search-history li {
     display: flex;
     justify-content: center;
@@ -60,3 +94,5 @@ input {
     display: flex;
     justify-content: center;
 }
+
+
