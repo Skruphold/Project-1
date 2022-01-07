@@ -46,7 +46,7 @@ $(document).on('keypress', function(e) {
 
 // made a function to call on an api based on the user inputed values that displays our response in the console. 
 function getLocation (locationValue, eventValue, stateValue) {
-    var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=" + eventValue + "&city=" + locationValue + "&apikey=" + tmAPIkey;
+    var tmURL = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=" + eventValue + "&city=" + locationValue + "&apikey=" + tmAPIkey + "&sort=date,asc";
     
     fetch(tmURL)
         .then(function(response){
@@ -176,6 +176,21 @@ function initialStore() {
         $(previouslist).append(listEntries);
         $(searchStore).append(previouslist);
     }
+}
+
+var myIndex = 0;
+carousel();
+
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  myIndex++;
+  if (myIndex > x.length) {myIndex = 1}    
+  x[myIndex-1].style.display = "block";  
+  setTimeout(carousel, 5000); // Change image every 2 seconds
 }
 
 initialStore();
