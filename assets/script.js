@@ -12,6 +12,7 @@ var searchPage = $("#searchPage");
 
 var searchStore = $('#search-history');
 var noDup = JSON.parse(localStorage.getItem("search"));
+localStorage.setItem("search", noDup);
 var searchList = [];
 console.log(searchList);
 if(searchList === null){
@@ -40,7 +41,7 @@ submitBtn.on("click", function(event) {
         // recentStorage();
         locationInput.val("");
         stateInput.val("");
-        localStorage.setItem("search", noDup);
+        // localStorage.setItem("search", noDup);
     }
     // localStorage.setItem("search", noDup);
 })
@@ -119,7 +120,7 @@ function getLocation (locationValue, eventValue, stateValue) {
                      searchList.push({locationValue, eventValue, stateValue});
                      var noDup = Array.from(searchList.reduce((map, obj) => map.set(obj.locationValue+obj.stateValue+obj.eventValue, obj), new Map()).values());
                      console.log(noDup);
-                    //  localStorage.setItem("search", JSON.stringify(noDup));
+                     localStorage.setItem("search", JSON.stringify(noDup));
                 })
             }
         // catching any errors
