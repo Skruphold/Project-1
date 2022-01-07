@@ -12,11 +12,12 @@ var searchPage = $("#searchPage");
 
 var searchStore = $('#search-history');
 var noDup = JSON.parse(localStorage.getItem("search"));
+localStorage.setItem("search", noDup);
 var searchList = [];
 console.log(searchList);
 if(searchList === null){
     var searchList = [];
-    var noDup = Array.from(searchList.reduce((map, obj) => map.set(obj.locationValue, obj), new Map()).values());
+    // var noDup = Array.from(searchList.reduce((map, obj) => map.set(obj.locationValue, obj), new Map()).values());
 };
 
 // var noDup = Array.from(searchList.reduce((map, obj) => map.set(obj.locationValue, obj), new Map()).values());
@@ -40,8 +41,9 @@ submitBtn.on("click", function(event) {
         // recentStorage();
         locationInput.val("");
         stateInput.val("");
+        // localStorage.setItem("search", noDup);
     }
-    localStorage.setItem("search", noDup);
+    // localStorage.setItem("search", noDup);
 })
 
 // pressing enter will also populate the page.
