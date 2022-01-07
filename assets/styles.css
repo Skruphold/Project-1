@@ -1,75 +1,34 @@
-
-html, body { 
-    margin: 0;
-    padding: 0;
-}
-html {
-    height: 100%;
-}
-body {
-    min-height: 100%;
-}
 #resultsPage {
     display: none;
 }
-.content {
-    margin-bottom: 0px;
-}
+
 .navbar {
     display: flex;
     justify-content: center;
     height: 75px;
     background-color: black;
     color: white;
-    margin-bottom: 0;
 }
 .navbar p {
     color: white
 }
-/* html {
+html {
     background-color: lightgray;
-} */
-/* td table thead {
+}
+td table thead {
     background-color: lightgray;
-} */
-.columns {
-    background-image: url("https://user-images.githubusercontent.com/95504111/148597639-7ed3eac6-1cfc-49cf-8199-cf86950dc353.jpg");
-    background-size: cover;
-    position: relative;
-    top: 0;
-    min-width: 100%;
-    
-
 }
 #resultsTable {
-background-color:  rgba(211, 211, 211, 0.404);
-margin-left: 10%;
-/* margin-bottom: 0%; */
-padding: 0px;
-/* margin: 0px; */
-top: 5px;
+background-color: lightgray;
 }
-
 #tmResults {
-    background-color: rgba(211, 211, 211, 0.404);
-    /* margin-right: 20%; */
-    top: 5px;
-}
-#searchPage {
-    min-height: 100%;
+    background-color: lightgray;
 }
 .history-btn:hover {
    cursor: pointer;
    background-color: lightblue;
-
-
-}
-td, a {
-    font-weight: bold;
-    color: white;
-}
     
-
+}
 #search-history li {
     display: flex;
     justify-content: center;
@@ -101,5 +60,3 @@ input {
     display: flex;
     justify-content: center;
 }
-
-
