@@ -11,13 +11,15 @@ var searchPage = $("#searchPage");
 
 
 var searchStore = $('#search-history');
-var searchList = JSON.parse(localStorage.getItem("search"));
+var noDup = JSON.parse(localStorage.getItem("search"));
+var searchList = [];
 console.log(searchList);
 if(searchList === null){
     var searchList = [];
+    var noDup = Array.from(searchList.reduce((map, obj) => map.set(obj.locationValue, obj), new Map()).values());
 };
 
-const noDup = Array.from(searchList.reduce((map, obj) => map.set(obj.locationValue, obj), new Map()).values());
+// var noDup = Array.from(searchList.reduce((map, obj) => map.set(obj.locationValue, obj), new Map()).values());
 
 // Hunter's api key
 var tmAPIkey = "j6vHekkc5X8bANXHOmkGTl9eTugoLWGi"
@@ -28,34 +30,18 @@ submitBtn.on("click", function(event) {
     var locationValue = locationInput.val().trim();
     var eventValue = eventInput.val().trim();
     var stateValue = stateInput.val().trim();
-    // if (locationValue==="") {
-    //     return;
-    // } else if (stateValue===""){
-    //     return;
-    // } else {
-    //     resultsPage.removeAttr('id', 'resultsPage');
-    //     searchPage.attr('id', 'resultsPage');
-        // searchList.push({locationValue, stateValue, eventValue});
+    if (locationValue==="") {
+        return;
+    } else if (stateValue===""){
+        return;
+    } else {
         getLocation(locationValue, eventValue, stateValue);
         apiCovid(stateValue);
         // recentStorage();
         locationInput.val("");
         stateInput.val("");
-        // localStorage.setItem("search", JSON.stringify(searchList));
-        // if(searchPage.attr("id") != resultsPage){
-        //    alert("error 4324!");
-        // //    searchList.push({locationValue, stateValue, eventValue});
-        // } 
-        // else {
-        //     // alert("error 3123!")
-        //     searchList.push({locationValue, stateValue, eventValue});
-        // }
-        // localStorage.setItem("search", JSON.stringify(searchList));
-        // searchList.push({locationValue, stateValue, eventValue});
-        // localStorage.setItem("search", JSON.stringify(searchList));
-        // alert("error 3123!");
-        
-    // }
+    }
+    localStorage.setItem("search", noDup);
 })
 
 // pressing enter will also populate the page.
@@ -111,8 +97,6 @@ function getLocation (locationValue, eventValue, stateValue) {
                             // localStorage.setItem("search", JSON.stringify(searchList));
                             }
                     } else {
-                        // resultsPage.removeAttr('id', 'resultsPage');
-                        // searchPage.attr('id', 'resultsPage');
                         alert("not a city!")
                         // searchList.pop();
                         searchList.pop();
@@ -130,41 +114,11 @@ function getLocation (locationValue, eventValue, stateValue) {
                         // searchList.push({locationValue, stateValue, eventValue});
                         // localStorage.setItem("search", JSON.stringify(searchList));
                      }
-                     localStorage.setItem("search", JSON.stringify(searchList));
-
-                    //  var nonDuplicate = searchList.reduce((map, obj) => map.set(obj.stateValue, obj), new Map());
-                    //  searchList.splice(-1,1);
-                    //  console.log(searchList.splice(-1,1));
-                    //added a for loop through the list of events and appending the events on the html page.
-                    // for( var i = 0; i < data._embedded.events.length; i++) {
-                    // var tableBody= document.createElement("tbody");
-                    // var newEntry = document.createElement("tr");
-                    // var eventName=data._embedded.events[i].name;
-                    // var eventDate= document.createElement("td");
-                    // var dateTime=data._embedded.events[i].dates.start.localDate;
-                    // eventDate.textContent=dateTime;
-                    // $(newEntry).append(eventDate);
-                    
-                    // var link = document.createElement("td");
-                    // var hrefurl = data._embedded.events[i].url;
-                    // var anchor = document.createElement("a");
-
-                    // $(anchor).attr("href", hrefurl );
-                    // $(anchor).attr("target", "_blank" );
-                    // anchor.textContent= eventName;
-
-                    // $(link).append(anchor);
-                    // $(newEntry).append(link);
-                    
-                    // var venue=document.createElement("td");
-                    // var venuelocation=data._embedded.events[i]._embedded.venues[0].name;
-                    // venue.textContent=venuelocation
-                    // $(newEntry).append(venue);
-
-                    // $(tableBody).append(newEntry);  
-                    // $("#tmResults").append(tableBody);
-                
-                    // }
+                    //  localStorage.setItem("search", JSON.stringify(searchList));
+                     searchList.push({locationValue, eventValue, stateValue});
+                     var noDup = Array.from(searchList.reduce((map, obj) => map.set(obj.locationValue+obj.stateValue+obj.eventValue, obj), new Map()).values());
+                     console.log(noDup);
+                     localStorage.setItem("search", JSON.stringify(noDup));
                 })
             }
         // catching any errors
@@ -189,11 +143,8 @@ var apiCovid = function(stateValue){
                 response.json().then(function(data){
                     var covidData = data.dates[rightNow].countries.US.regions[0];
                     console.log(covidData.id);
-                    if(stateValue.replace(" ", "_") !== covidData.id){
-                        alert("not a state!")
-                        console.log(stateValue.replace(" ", "_"));
-                        console.log(covidData.id);
-                    } else {
+                    if(stateValue.replace(" ", "_") === covidData.id){
+
                         var tableBody= document.createElement("tbody");
                         var newEntry = document.createElement("tr");
                         var newConfirmed = document.createElement("td");
@@ -214,41 +165,15 @@ var apiCovid = function(stateValue){
                         $("#resultsTable").append(tableBody);
                         console.log(tableBody);
                         console.log(todayconfirmedData);
-                        // resultsPage.removeAttr('id', 'resultsPage');
-                        // searchPage.attr('id', 'resultsPage');
+                    } else {
+                        alert("not a state!")
+                        console.log(stateValue.replace(" ", "_"));
+                        console.log(covidData.id);
                     };
-
-                    // var tableBody= document.createElement("tbody");
-                    // var newEntry = document.createElement("tr");
-                    // var newConfirmed = document.createElement("td");
-
-                    // var stateName = document.createElement("td");
-                    // stateValue=stateValue.charAt(0).toUpperCase()+stateValue.slice(1);
-                    // stateName.textContent = stateValue;
-               
-                    // $(newEntry).append(stateName);
-                    // var todayconfirmedData = covidData.today_new_confirmed;
-                    // newConfirmed.textContent = todayconfirmedData;
-                    // var allTimeConfirmed = covidData.today_confirmed;
-                    // var allTime = document.createElement("td");
-                    // allTime.textContent = allTimeConfirmed;
-                    // $(newEntry).append(newConfirmed);
-                    // $(newEntry).append(allTime);
-                    // $(tableBody).append(newEntry);
-                    // $("#resultsTable").append(tableBody);
-                    // console.log(tableBody);
-                    // console.log(todayconfirmedData);
                 })
             }
         })
 };
-
-// var searchStore = $('#search-history');
-// var searchList = JSON.parse(localStorage.getItem("search"));
-// console.log(searchList);
-// if(searchList === null){
-//     var searchList = [];
-// };
 
 searchStore.on("click", "li.history-btn", function (event) {
     var userCity = $(event.target).attr('data-city');
@@ -256,8 +181,6 @@ searchStore.on("click", "li.history-btn", function (event) {
     var userEvent = $(event.target).attr('data-event');
     getLocation(userCity, userEvent, userState);
     apiCovid(userState);
-    // resultsPage.removeAttr('id', 'resultsPage');
-    // searchPage.attr('id', 'resultsPage');
 });
 
 
