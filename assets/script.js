@@ -16,7 +16,7 @@ var searchList = [];
 console.log(searchList);
 if(searchList === null){
     var searchList = [];
-    var noDup = Array.from(searchList.reduce((map, obj) => map.set(obj.locationValue, obj), new Map()).values());
+    // var noDup = Array.from(searchList.reduce((map, obj) => map.set(obj.locationValue, obj), new Map()).values());
 };
 
 // var noDup = Array.from(searchList.reduce((map, obj) => map.set(obj.locationValue, obj), new Map()).values());
@@ -40,8 +40,9 @@ submitBtn.on("click", function(event) {
         // recentStorage();
         locationInput.val("");
         stateInput.val("");
+        localStorage.setItem("search", noDup);
     }
-    localStorage.setItem("search", noDup);
+    // localStorage.setItem("search", noDup);
 })
 
 // pressing enter will also populate the page.
@@ -118,7 +119,7 @@ function getLocation (locationValue, eventValue, stateValue) {
                      searchList.push({locationValue, eventValue, stateValue});
                      var noDup = Array.from(searchList.reduce((map, obj) => map.set(obj.locationValue+obj.stateValue+obj.eventValue, obj), new Map()).values());
                      console.log(noDup);
-                     localStorage.setItem("search", JSON.stringify(noDup));
+                    //  localStorage.setItem("search", JSON.stringify(noDup));
                 })
             }
         // catching any errors
