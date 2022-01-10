@@ -2,6 +2,11 @@
     display: none;
 }
 
+body {
+    background: url(./concert.jpg);
+    background-size: cover;
+}
+
 .navbar {
     display: flex;
     justify-content: center;
@@ -19,10 +24,10 @@ td table thead {
     background-color: lightgray;
 }
 #resultsTable {
-background-color: lightgray;
+    background-color: rgba(211, 211, 211, 0.7);
 }
 #tmResults {
-    background-color: lightgray;
+    background-color: rgba(211, 211, 211, 0.7);
 }
 .history-btn:hover {
    cursor: pointer;
@@ -59,4 +64,16 @@ input {
 .textHistory{
     display: flex;
     justify-content: center;
+}
+
+td {
+    color: rgb(22, 45, 245);
+    font-weight: bold;
+}
+
+.results-page {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    align-items: flex-start;
 }
